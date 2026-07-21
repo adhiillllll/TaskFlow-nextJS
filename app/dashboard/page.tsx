@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect,useState } from "react";
+import LogoutButton from "../components/LogoutButton";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type Task = {
   id: string;
@@ -13,10 +16,17 @@ export default function DashboardPage() {
   const [description, setDescription] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+  const { status } = useSession();
+  const router = useRouter();
   
   
   const fetchTasks = async () => {
   const response = await fetch("/api/tasks");
+
+  if (!response.ok) {
+    setTasks([]);
+    return;
+  }
 
   const data = await response.json();
 
@@ -26,6 +36,12 @@ export default function DashboardPage() {
 useEffect(() => {
   fetchTasks();
 }, []);
+
+useEffect(() => {
+  if (status === "unauthenticated") {
+    router.push("/login");
+  }
+}, [status, router]);
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
@@ -73,6 +89,8 @@ useEffect(() => {
 
   return (
     <main className="min-h-screen flex items-center justify-center">
+      <LogoutButton />
+
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 w-96"

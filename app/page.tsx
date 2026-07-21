@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen">
@@ -6,6 +8,21 @@ export default function Home() {
       <p className="mt-4 text-gray-600">
         My first Next.js + Prisma + Auth.js project 
       </p>
+      <div className="flex gap-4 mt-6">
+  <Link
+    href="/login"
+    className="bg-white text-black px-4 py-2 rounded"
+  >
+    Login
+  </Link>
+
+  <Link
+    href="/register"
+    className="border border-white px-4 py-2 rounded"
+  >
+    Register
+  </Link>
+</div>
     </main>
   );
 }

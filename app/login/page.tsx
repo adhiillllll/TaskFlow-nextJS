@@ -2,10 +2,12 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
@@ -21,7 +23,7 @@ export default function LoginPage() {
     if (result?.error) {
       alert("Invalid email or password");
     } else {
-      alert("Login successful");
+      router.push("/dashboard");
     }
   };
 

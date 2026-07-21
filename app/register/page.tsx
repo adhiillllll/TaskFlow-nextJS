@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
@@ -29,7 +31,8 @@ export default function RegisterPage() {
     console.log(data);
 
     if (response.ok) {
-      alert("Registration successful!");
+      router.push("/dashboard");
+      
 
       setName("");
       setEmail("");
